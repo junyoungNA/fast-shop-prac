@@ -143,23 +143,30 @@ const AppStateProvider = ({ children }) => {
 
       if (finded === undefined) {
         return [...orders, { id, quantity: 1 }];
+      } else {
+        return orders.map(order => {
+          if (order.id === id) {
+            return {
+              id,
+              quantity: order.quantity + 1,
+            };
+          } else {
+            return order;
+          }
+        });
       }
-      return orders.map(order => {
-        if (order.id === id) {
-          return {
-            id,
-            quantity: order.quantity + 1,
-          };
-        } else {
-          return order;
-        }
-      });
     });
   }, []);
 
-  const remove = useCallback(id => {}, []);
+  const remove = useCallback(id => {
+    setOrders(orders => {
+      return orders.filter(order => order.id !== id);
+    });
+  }, []);
 
-  const removeAll = useCallback(() => {}, []);
+  const removeAll = useCallback(() => {
+    setOrders([]);
+  }, []);
   return (
     <AppStateContext.Provider
       value={{

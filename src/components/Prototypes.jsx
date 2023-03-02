@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import AppStateContext from '../contexts/AppStateContext';
 import usePrototypes from '../hooks/usePrototypes';
 import useActions from '../hooks/useActions';
 
@@ -7,7 +5,6 @@ const Prototypes = () => {
   const prototypes = usePrototypes();
   const { addToOrder } = useActions();
   const addToClick = id => {
-    console.log(id);
     addToOrder(id);
   };
   return (
@@ -15,6 +12,7 @@ const Prototypes = () => {
       <div className="prototypes">
         {prototypes.map(prototype => {
           const { id, thumbnail, title, price, desc, pieUrl } = prototype;
+
           return (
             <div key={id} className="prototype">
               <a href={pieUrl} target="_BLANK" rel="noreferrer">
@@ -40,6 +38,7 @@ const Prototypes = () => {
                   <div
                     className="btn btn--primary float--right"
                     onClick={() => {
+                      console.log(prototype);
                       addToClick(id);
                     }}
                   >
@@ -47,7 +46,7 @@ const Prototypes = () => {
                   </div>
                   {title}
                 </div>
-                <p className="prototype__price">$ {price}</p>
+                <p className="prototype__price">$ {prototype.price}</p>
                 <p className="prototype__desc">{desc}</p>
               </div>
             </div>
